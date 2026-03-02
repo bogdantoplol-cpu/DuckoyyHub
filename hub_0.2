@@ -1,0 +1,314 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Lighting = game:GetService("Lighting")
+
+local player = Players.LocalPlayer
+local KEY = "duckHub182"
+
+--------------------------------------------------
+-- SCRIPT LIST
+--------------------------------------------------
+
+local Scripts = {
+  -- Garden Horizons
+    [130594398886540] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/GH.lua",
+    
+    -- Restaurant Tycoon 3
+    [119048529960596] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/RT3.lua",
+    [99889627739043]  = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/RT3.lua",
+
+    -- Break your Bones
+    [123821081589134] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/ByB.lua",
+
+    -- Expedition Antarctica
+    [2693023319] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/Expedition-Antarctica.lua",
+
+    -- Raft Tycoon
+    [76137189788863] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/RT.lua",
+
+    -- The Dropper
+    [166731267]  = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/TD.lua",
+    [5187473975] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/TD.lua",
+    [5187824911] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/TD.lua",
+
+    -- Maze Simulator
+    [109644231059364] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/Maze-Simulator.lua",
+
+    -- IQ Test
+    [11782774748]     = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/IQ-Test.lua",
+    [14692578554]     = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/IQ-Test.lua",
+    [102032333476768] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/IQ-Test.lua",
+
+    -- No Jumping Obby
+    [17321628486] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/No-Jumping-Obby.lua",
+
+    -- The $1,000,000 Glass Bridge
+    [87854376962069] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/The1000000GlassBridge.lua",
+
+    -- Mega Princess Tycoon
+    [14448027693] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/MPT.lua",
+    [15247657190] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/MPT.lua",
+    [18281211268] = "https://raw.githubusercontent.com/samuraa1/Samuraa1-Hub/refs/heads/main/MPT.lua",
+    
+    -- BaddieJumping
+    [70654235200182] = "https://raw.githubusercontent.com/iwasonceagod/SandManScripts/main/BaddieJumping",
+    
+    -- BetterAnimeCharacter
+    [95828142573081] = "https://raw.githubusercontent.com/iwasonceagod/SandManScripts/main/BetterAnimeCharacter"
+}
+
+--------------------------------------------------
+-- GUI
+--------------------------------------------------
+
+local screen = Instance.new("ScreenGui")
+screen.Parent = player:WaitForChild("PlayerGui")
+screen.ResetOnSpawn = false
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0,350,0,270)
+frame.Position = UDim2.new(0.5,-175,0.5,-110)
+frame.BackgroundColor3 = Color3.fromRGB(12,12,18)
+frame.BorderSizePixel = 0
+frame.Parent = screen
+
+Instance.new("UICorner",frame).CornerRadius = UDim.new(0,14)
+
+--------------------------------------------------
+-- BLUR
+--------------------------------------------------
+
+local blur = Instance.new("BlurEffect")
+blur.Size = 0
+blur.Parent = Lighting
+
+task.spawn(function()
+    for i = 0,20 do
+        blur.Size = i
+        task.wait(0.03)
+    end
+end)
+
+--------------------------------------------------
+-- PARTICLES PRO STYLE
+--------------------------------------------------
+
+local particleFrame = Instance.new("Frame")
+particleFrame.Size = UDim2.new(1,0,1,0)
+particleFrame.BackgroundTransparency = 1
+particleFrame.Parent = screen
+
+local function createParticles()
+
+    for i = 1,25 do
+        local p = Instance.new("Frame")
+        p.Size = UDim2.new(0,4,0,4)
+        p.BackgroundColor3 = Color3.fromRGB(0,180,255)
+        p.BorderSizePixel = 0
+        p.BackgroundTransparency = math.random(60,90)/100
+
+        p.Position = UDim2.new(
+            math.random(0,100)/100,
+            0,
+            math.random(0,100)/100,
+            0
+        )
+
+        p.Parent = particleFrame
+
+        task.spawn(function()
+            while p.Parent do
+                local tween = TweenService:Create(
+                    p,
+                    TweenInfo.new(2,Enum.EasingStyle.Sine),
+                    {
+                        Position = UDim2.new(
+                            math.random(0,100)/100,
+                            0,
+                            math.random(0,100)/100,
+                            0
+                        )
+                    }
+                )
+                tween:Play()
+                tween.Completed:Wait()
+            end
+        end)
+    end
+end
+
+createParticles()
+
+--------------------------------------------------
+-- AVATAR
+--------------------------------------------------
+
+local avatar = Instance.new("ImageLabel")
+avatar.Size = UDim2.new(0,80,0,80)
+avatar.Position = UDim2.new(0.5,-40,0,15)
+avatar.BackgroundTransparency = 1
+avatar.Parent = frame
+
+avatar.Image = Players:GetUserThumbnailAsync(
+    player.UserId,
+    Enum.ThumbnailType.HeadShot,
+    Enum.ThumbnailSize.Size100x100
+)
+
+--------------------------------------------------
+-- TEXT TYPE ANIMATION
+--------------------------------------------------
+
+local helloText = Instance.new("TextLabel")
+helloText.Size = UDim2.new(1,0,0,40)
+helloText.Position = UDim2.new(0,0,0,100)
+helloText.BackgroundTransparency = 1
+helloText.Font = Enum.Font.GothamBold
+helloText.TextSize = 20
+helloText.TextColor3 = Color3.fromRGB(200,200,255)
+helloText.Parent = frame
+
+local function TypeText(label,text)
+    label.Text = ""
+    for i = 1,#text do
+        label.Text = string.sub(text,1,i)
+        task.wait(0.05)
+    end
+end
+
+task.spawn(function()
+    TypeText(helloText,"Hello "..player.Name)
+end)
+
+--------------------------------------------------
+-- KEY BOX
+--------------------------------------------------
+
+local box = Instance.new("TextBox")
+box.Size = UDim2.new(0,250,0,40)
+box.Position = UDim2.new(0.5,-125,0,140)
+box.PlaceholderText = "Enter Key"
+box.Font = Enum.Font.Gotham
+box.TextSize = 16
+box.BackgroundColor3 = Color3.fromRGB(25,25,35)
+box.TextColor3 = Color3.new(1,1,1)
+box.Parent = frame
+
+Instance.new("UICorner",box).CornerRadius = UDim.new(0,8)
+
+--------------------------------------------------
+-- EXECUTE HUB
+--------------------------------------------------
+
+local function ExecuteHub()
+
+    -- GUI fade out
+    task.spawn(function()
+        for i = 1,10 do
+            frame.BackgroundTransparency = i/10
+            task.wait(0.03)
+        end
+        frame.Visible = false
+    end)
+
+    -- blur remove
+    task.spawn(function()
+        for i = 20,0,-1 do
+            blur.Size = i
+            task.wait(0.02)
+        end
+        blur:Destroy()
+    end)
+
+    -- particles remove
+    task.spawn(function()
+        for _,v in pairs(particleFrame:GetChildren()) do
+            v:Destroy()
+        end
+        particleFrame:Destroy()
+    end)
+
+    local scriptUrl = Scripts[game.PlaceId]
+
+    if scriptUrl then
+        task.wait(0.4)
+        pcall(function()
+            loadstring(game:HttpGet(scriptUrl))()
+        end)
+    else
+        player:Kick("Hub not supported")
+    end
+end
+
+--------------------------------------------------
+-- BUTTON
+--------------------------------------------------
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0,250,0,40)
+button.Position = UDim2.new(0.5,-125,0,185)
+button.Text = "AUTHENTICATE"
+button.Font = Enum.Font.GothamBold
+button.TextSize = 16
+button.BackgroundColor3 = Color3.fromRGB(0,170,255)
+button.Parent = frame
+
+Instance.new("UICorner",button).CornerRadius = UDim.new(0,8)
+
+button.MouseButton1Click:Connect(function()
+
+    if box.Text == KEY then
+        TypeText(helloText,"Key Correct!")
+        task.wait(1)
+        ExecuteHub()
+    else
+        TypeText(helloText,"Wrong Key!")
+        task.wait(1)
+        TypeText(helloText,"Hello "..player.Name)
+    end
+
+end)
+--------------------------------------------------
+-- GET KEY BUTTON FIX
+--------------------------------------------------
+
+local getKeyButton = Instance.new("TextButton")
+getKeyButton.Size = UDim2.new(0,250,0,35)
+getKeyButton.Position = UDim2.new(0.5,-125,0,230)
+getKeyButton.Text = "GET KEY"
+getKeyButton.Font = Enum.Font.GothamBold
+getKeyButton.TextSize = 14
+getKeyButton.BackgroundColor3 = Color3.fromRGB(0,120,200)
+getKeyButton.TextColor3 = Color3.new(1,1,1)
+getKeyButton.Parent = frame
+
+Instance.new("UICorner",getKeyButton).CornerRadius = UDim.new(0,8)
+
+getKeyButton.MouseButton1Click:Connect(function()
+
+    pcall(function()
+
+        setclipboard("https://t.me/+nq0e9VgBrgxjOWRi")
+
+        game:GetService("StarterGui"):SetCore("SendNotification",{
+            Title="Key System",
+            Text="Key link copied!",
+            Duration=3
+        })
+
+    end)
+
+end)
+--------------------------------------------------
+-- HUB TITLE
+--------------------------------------------------
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1,0,0,40)
+title.Position = UDim2.new(0,0,0,-6)
+title.BackgroundTransparency = 1
+title.Text = "Duckoy Hub"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
+title.TextColor3 = Color3.fromRGB(180,200,255)
+title.Parent = frame
