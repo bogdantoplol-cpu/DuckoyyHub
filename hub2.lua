@@ -268,3 +268,38 @@ button.MouseButton1Click:Connect(function()
     end
 
 end)
+--------------------------------------------------
+-- GET KEY BUTTON FIX
+--------------------------------------------------
+
+local getKeyButton = Instance.new("TextButton")
+getKeyButton.Size = UDim2.new(0,250,0,35)
+getKeyButton.Position = UDim2.new(0.5,-125,0,230)
+getKeyButton.Text = "GET KEY"
+getKeyButton.Font = Enum.Font.GothamBold
+getKeyButton.TextSize = 14
+getKeyButton.BackgroundColor3 = Color3.fromRGB(0,120,200)
+getKeyButton.TextColor3 = Color3.new(1,1,1)
+getKeyButton.Parent = frame
+
+Instance.new("UICorner",getKeyButton).CornerRadius = UDim.new(0,8)
+
+getKeyButton.MouseButton1Click:Connect(function()
+
+    pcall(function()
+
+        setclipboard("https://t.me/+nq0e9VgBrgxjOWRi")
+
+        game:GetService("StarterGui"):SetCore("SendNotification",{
+            Title="Key System",
+            Text="Key link copied!",
+            Duration=3
+        })
+
+    end)
+
+end)
+        TypeText(helloText,"Hello "..player.Name)
+    end
+
+end)
